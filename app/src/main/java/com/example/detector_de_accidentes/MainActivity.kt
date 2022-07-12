@@ -23,11 +23,13 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.detector_de_accidentes.ui.theme.DetectorDeAccidentesTheme
@@ -66,82 +68,15 @@ fun BuildContentRegister() {
     Scaffold {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center,
             modifier = Modifier.padding(horizontal = 32.dp)
+                .fillMaxSize()
         ) {
-            val inputNameState = remember { mutableStateOf(TextFieldValue()) }
-            OutlinedTextField(
-                value = inputNameState.value,
-                onValueChange = { inputNameState.value = it },
-                label = { Text(text = "Nombres y Apellidos") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Person,
-                        contentDescription = null
-                    )
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp)
+            Text(
+                text = "Bienvenido a la app para detectar accidentes",
+                fontSize = 32.sp,
+                textAlign = TextAlign.Center
             )
-            val inputEmailState = remember { mutableStateOf(TextFieldValue()) }
-            OutlinedTextField(
-                value = inputEmailState.value,
-                onValueChange = { inputEmailState.value = it },
-                label = { Text(text = "Email") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Email,
-                        contentDescription = null
-                    )
-                },
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 8.dp)
-            )
-            val inputPwdState = remember { mutableStateOf(TextFieldValue()) }
-            OutlinedTextField(
-                value = inputPwdState.value,
-                onValueChange = { inputPwdState.value = it },
-                label = { Text(text = "Constraseña") },
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
-                leadingIcon = {
-                    Icon(
-                        imageVector = Icons.Default.Lock,
-                        contentDescription = null
-                    )
-                },
-                modifier = Modifier.fillMaxWidth()
-            )
-            Button(
-                onClick = {
-                    register(
-                        inputNameState.value.text, inputEmailState.value.text,
-                        inputPwdState.value.text, mContext
-                    )
-                },
-                modifier = Modifier
-                    .width(220.dp)
-                    .padding(top = 24.dp)
-            ) {
-                Text(text = "Registrar")
-            }
-        }
-    }
-}
-
-fun register(fullName: String, email: String, password: String, context: Context) {
-    val user = User(
-        fullname = fullName,
-        email = email
-    )
-    val auth2: Task<AuthResult> = AuthService.firebaseRegister(email, password)
-    auth2.addOnCompleteListener { task ->
-        if (task.isSuccessful) {
-            Toast.makeText(context, "Successful register", Toast.LENGTH_SHORT).show()
-        } else {
-            Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show()
         }
     }
 }

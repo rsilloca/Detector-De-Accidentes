@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Title"
-            android:textColor="#000"
+            android:textColor="@color/black"
             android:textStyle="bold" />
 
         <!-- TextView for Body -->
@@ -43,6 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Message"
+            android:textColor="@color/black"
             android:textSize="15sp" />
 
     </LinearLayout>
