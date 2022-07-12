@@ -36,6 +36,7 @@ import com.example.detector_de_accidentes.firebase.repository.UserRepository
 import com.example.detector_de_accidentes.firebase.service.AuthService
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.messaging.FirebaseMessaging
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,6 +44,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             DetectorDeAccidentesTheme {
                 // A surface container using the 'background' color from the theme
+                FirebaseMessaging.getInstance().subscribeToTopic("APP_ACCIDENT").addOnSuccessListener {
+                    Toast.makeText(this, "Se ha unido exitosamente.", Toast.LENGTH_LONG).show()
+                }.addOnFailureListener {
+
+                }
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
@@ -130,11 +136,9 @@ fun register(fullName: String, email: String, password: String, context: Context
         fullname = fullName,
         email = email
     )
-    val auth2: Task<AuthResult> =
-        AuthService.firebaseRegister(email, password)
+    val auth2: Task<AuthResult> = AuthService.firebaseRegister(email, password)
     auth2.addOnCompleteListener { task ->
         if (task.isSuccessful) {
-            UserRepository.saveUser(user)
             Toast.makeText(context, "Successful register", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show()
